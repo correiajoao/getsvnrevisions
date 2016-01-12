@@ -12,16 +12,16 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 
 	git clone $repository snapshots/$cve/After
 
-	git --git-dir=snapshots/$cve/After/.git checkout $revision
-	git --git-dir=snapshots/$cve/After/.git checkout $revision
-	git --git-dir=snapshots/$cve/After/.git checkout $revision
+	git --git-dir=snapshots/$cve/After/.git checkout $commit
+	git --git-dir=snapshots/$cve/After/.git checkout $commit
+	git --git-dir=snapshots/$cve/After/.git checkout $commit
 
 	git --git-dir=snapshots/$cve/After/.git log -2 | grep commit | awk '{print $2}' > $cve.txt
 
 	while read line; do
 	line=${line/r/}
 
-	if [ "$line" != "$revision" ]
+	if [ "$line" != "$commit" ]
 	then
 		git clone $repository snapshots/$cve/Before
 
@@ -32,6 +32,6 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 
 	done < $cve.txt
 
-	echo "$cve - revision $revision finished!!"
+	echo "$cve - Commit $commit finished!!"
 
 done < "list.txt"
