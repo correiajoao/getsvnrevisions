@@ -11,11 +11,10 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 	repository=git://sourceware.org/git/glibc.git
 
 	git clone $repository snapshots/$cve/After
-
-	git --git-dir=snapshots/$cve/After/.git checkout $commit
-	git --git-dir=snapshots/$cve/After/.git checkout $commit
-	git --git-dir=snapshots/$cve/After/.git checkout $commit
-
+	
+	git --git-dir=snapshots/$cve/After/.git fetch origin
+	git --git-dir=snapshots/$cve/After/.git reset --hard $commit
+	
 	git --git-dir=snapshots/$cve/After/.git log -2 | grep commit | awk '{print $2}' > $cve.txt
 
 	while read line; do
@@ -24,10 +23,10 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 	if [ "$line" != "$commit" ]
 	then
 		git clone $repository snapshots/$cve/Before
-
-		git --git-dir=snapshots/$cve/Before/.git checkout $line
-		git --git-dir=snapshots/$cve/Before/.git checkout $line
-		git --git-dir=snapshots/$cve/Before/.git checkout $line
+		
+		git --git-dir=snapshots/$cve/After/.git fetch origin
+		git --git-dir=snapshots/$cve/After/.git reset --hard $commit
+	
 	fi
 
 	done < $cve.txt
