@@ -25,7 +25,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 		git clone $repository snapshots/$cve/Before
 		
 		git --git-dir=snapshots/$cve/After/.git fetch origin
-		git --git-dir=snapshots/$cve/After/.git reset --hard $commit
+		git --git-dir=snapshots/$cve/After/.git reset --hard $line
 	
 	fi
 
