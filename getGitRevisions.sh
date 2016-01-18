@@ -9,7 +9,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 	echo $commit
 
 	repository=git://sourceware.org/git/glibc.git
-
+	
 	git clone $repository snapshots/$cve/After
 	
 	cd snapshots/$cve/After/
@@ -31,6 +31,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 		git fetch origin
 		git reset --hard $line
 	
+		cd ../../../
 	fi
 
 	done < $cve.txt
