@@ -6,7 +6,7 @@ read cve
 echo "Revision:"
 read revision
 
-repository=https://src.chromium.org/viewvc/blink/
+repository=http://svn.apache.org/viewvc/httpd/httpd/trunk/
 
 svn checkout $repository@$revision $cve/After
 
